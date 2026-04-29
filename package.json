@@ -1,0 +1,70 @@
+{
+  "name": "cursor-link-patterns",
+  "displayName": "cursor-link-patterns",
+  "description": "Automatically turn text into links based on regex patterns — in editor and terminal.",
+  "version": "0.1.0",
+  "publisher": "mc-nv",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mc-nv/cursor-link-patterns"
+  },
+  "engines": {
+    "vscode": "^1.44.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Cursor Link Patterns",
+      "properties": {
+        "cursorLinkPatterns.rules": {
+          "type": "array",
+          "description": "Rules that turn matching text into clickable links.",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": ["linkPattern", "linkTarget"],
+            "additionalProperties": false,
+            "properties": {
+              "linkPattern": {
+                "type": "string",
+                "description": "Regular expression pattern to match."
+              },
+              "linkPatternFlags": {
+                "type": "string",
+                "description": "Regex flags (e.g. 'i' for case-insensitive). The 'g' flag is always added automatically.",
+                "default": ""
+              },
+              "linkTarget": {
+                "type": "string",
+                "description": "URL template. $0 = full match, $1 = first capture group, etc. Escape a literal $ with \\$."
+              },
+              "languages": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Editor language IDs this rule applies to. Use [\"*\"] for all languages. Has no effect on terminal links.",
+                "default": ["*"]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.44.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.0"
+  }
+}
